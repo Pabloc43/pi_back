@@ -5,8 +5,7 @@ import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
 
 import java.util.List;
 
-public interface IProductTypeService
-{
+public interface IProductTypeService {
     ProductType createProductType(ProductType productType);
 
     ProductType updateProductType(Long productTypeId, ProductType productType) throws ResourceNotFoundException;

@@ -3,7 +3,6 @@ package com.grupo3.digitalbook.demo.controller;
 import com.grupo3.digitalbook.demo.entity.ProductImage;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
 import com.grupo3.digitalbook.demo.service.IProductImageService;
-import com.grupo3.digitalbook.demo.service.impl.ProductImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
