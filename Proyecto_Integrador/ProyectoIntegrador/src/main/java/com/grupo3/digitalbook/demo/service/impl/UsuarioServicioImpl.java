@@ -36,7 +36,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     @Override
     public Usuario guardar(UsuarioRegistroDTO registroDTO) {
         Usuario usuario = new Usuario(registroDTO.getNombre(),
-                registroDTO.getApellido(),registroDTO.getEmail(),
+                registroDTO.getApellido(), registroDTO.getEmail(),
                 passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(new Rol("ROLE_USER")));
         return usuarioRepositorio.save(usuario);
     }
@@ -44,13 +44,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByEmail(username);
-        if(usuario == null) {
+        if (usuario == null) {
             throw new UsernameNotFoundException("Usuario o password inválidos");
         }
-        return new User(usuario.getEmail(),usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
+        return new User(usuario.getEmail(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles){
+    private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
     }
 

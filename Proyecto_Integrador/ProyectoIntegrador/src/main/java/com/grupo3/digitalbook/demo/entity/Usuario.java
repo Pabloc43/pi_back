@@ -20,11 +20,11 @@ public class Usuario {
     private String email;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id")
     )
     private Collection<Rol> roles;
 
