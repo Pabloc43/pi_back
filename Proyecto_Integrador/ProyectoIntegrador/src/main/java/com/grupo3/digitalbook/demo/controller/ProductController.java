@@ -1,9 +1,11 @@
 package com.grupo3.digitalbook.demo.controller;
 
+import com.grupo3.digitalbook.demo.entity.Brand;
 import com.grupo3.digitalbook.demo.entity.Product;
 import com.grupo3.digitalbook.demo.entity.ProductImage;
 import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
+import com.grupo3.digitalbook.demo.service.impl.BrandServiceImpl;
 import com.grupo3.digitalbook.demo.service.impl.ProductImageServiceImpl;
 import com.grupo3.digitalbook.demo.service.impl.ProductServiceImpl;
 import org.apache.log4j.Logger;
@@ -25,6 +27,8 @@ public class ProductController {
     private ProductServiceImpl productServiceImpl;
 
     @Autowired
+    private BrandServiceImpl brandService;
+    @Autowired
     private ProductImageServiceImpl productImageServiceImpl;
 
     private final static Logger LOGGER = Logger.getLogger(ProductController.class);
@@ -33,6 +37,18 @@ public class ProductController {
     @PostMapping("/create")
     public ResponseEntity<Product> createProduct(
             @RequestBody @Valid Product product) throws BadRequestException {
+
+        String brandDescription = product.getBrand().getDescription();
+        Brand existingBrand = brandService.findByDescription(brandDescription);
+
+        if (existingBrand == null) {
+            // Si la marca no existe, crea una nueva marca
+            Brand newBrand = new Brand(brandDescription);
+            existingBrand = brandService.createBrand(newBrand);
+        }
+
+        // Asocia la marca existente al producto
+        product.setBrand(existingBrand);
 
         Set<ProductImage> productImages = product.getProductImages();
 

@@ -65,4 +65,9 @@ public class BrandServiceImpl implements IBrandService {
     public List<Brand> getAllBrands() {
         return brandRepository.findAll();
     }
+
+    @Override
+    public Brand findByDescription(String description) {
+        return brandRepository.findByDescription(description);
+    }
 }

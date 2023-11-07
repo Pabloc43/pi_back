@@ -15,5 +15,7 @@ public interface IBrandService {
     Brand findBrandById(Long id) throws ResourceNotFoundException;
 
     List<Brand> getAllBrands();
+
+    Brand findByDescription(String description);
 }
 

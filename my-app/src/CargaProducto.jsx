@@ -7,13 +7,12 @@ function ProductForm() {
     description: '',
     stock: 0,
     productType: 0,
-    brand: 0,
+    brand: '', // Cambiar a campo de texto
     specs: [],
     productImages: [],
   });
 
   const [productTypes, setProductTypes] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [specs, setSpecs] = useState([]);
 
   useEffect(() => {
@@ -25,16 +24,6 @@ function ProductForm() {
       })
       .catch((error) => {
         console.error('Error al cargar productTypes', error);
-      });
-
-    // Cargar las opciones de brand desde localhost:8081/brands
-    fetch('http://localhost:8081/brands')
-      .then((response) => response.json())
-      .then((data) => {
-        setBrands(data);
-      })
-      .catch((error) => {
-        console.error('Error al cargar brands', error);
       });
 
     // Cargar las opciones de specs desde localhost:8081/specs
@@ -99,10 +88,10 @@ function ProductForm() {
       description: formData.description,
       stock: formData.stock,
       productType: { id: formData.productType },
-      brand: { id: formData.brand },
+      brand: { description: formData.brand }, // Cambiar para enviar la descripción
       specs: formData.specs.map((spec) => ({ id: spec.id })),
-      productImages: formData.productImages.map((image) => ({ productImage: image })),
-    };
+      productImages: formData.productImages.map((image) => ({ productImage: image }),
+    )};
 
     console.log(productData);
 
@@ -184,18 +173,12 @@ function ProductForm() {
       </div>
       <div>
         <label>Marca:</label>
-        <select
+        <input
+          type="text" // Cambiar a campo de texto
           name="brand"
           value={formData.brand}
           onChange={handleChange}
-        >
-          <option value={0}>Seleccione una opción</option>
-          {brands.map((brand) => (
-            <option key={brand.id} value={brand.id}>
-              {brand.description}
-            </option>
-          ))}
-        </select>
+        />
       </div>
       <div>
         <label>Especificaciones:</label>
