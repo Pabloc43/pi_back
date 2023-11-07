@@ -3,6 +3,7 @@ package com.grupo3.digitalbook.demo.service;
 import com.grupo3.digitalbook.demo.entity.Product;
 import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,5 +19,9 @@ public interface IProductService {
     public Optional<Product> findProductById(Long id) throws ResourceNotFoundException;
 
     List<Product> getAllProducts();
+
+    List<Product> getFirst20Products(Pageable pageable);
+
+    List<Product> getFirst10Products(Pageable pageable);
 }
 

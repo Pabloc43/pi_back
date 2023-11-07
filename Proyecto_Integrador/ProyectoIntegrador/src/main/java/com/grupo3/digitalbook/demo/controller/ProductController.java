@@ -10,6 +10,8 @@ import com.grupo3.digitalbook.demo.service.impl.ProductImageServiceImpl;
 import com.grupo3.digitalbook.demo.service.impl.ProductServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -119,6 +121,19 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/first20")
+    public ResponseEntity<List<Product>> getFirst20Products() {
+        Pageable pageable = PageRequest.of(0, 20);
+        List<Product> products = productServiceImpl.getFirst20Products(pageable);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/first10")
+    public ResponseEntity<List<Product>> getFirst10Products() {
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Product> products = productServiceImpl.getFirst10Products(pageable);
+        return ResponseEntity.ok(products);
+    }
 }
 
 
