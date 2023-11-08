@@ -11,16 +11,7 @@ const LoginComponent = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleLogin = async (token) => {
-    // Almacenar el token JWT en el almacenamiento local
-    localStorage.setItem('jwtToken', token);
-
-    // Redirigir a la página principal o realizar otra acción después del inicio de sesión
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
       // Enviar los datos del formulario al backend (usando fetch o axios)
       const response = await fetch('http://localhost:8081/auth/login', {
@@ -33,16 +24,26 @@ const LoginComponent = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const { token } = data;
+        const { token, userDto } = data;
 
-        // Llamar a la función para manejar el inicio de sesión y almacenar el token
-        handleLogin(token);
+        // Almacenar el token JWT en el almacenamiento local
+        localStorage.setItem('jwtToken', token);
+
+        // Almacenar los datos del UserDto en el almacenamiento local
+        localStorage.setItem('userDto', JSON.stringify(userDto));
+
+        // Redirigir a la página principal o realizar otra acción después del inicio de sesión
       } else {
         // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
       }
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
