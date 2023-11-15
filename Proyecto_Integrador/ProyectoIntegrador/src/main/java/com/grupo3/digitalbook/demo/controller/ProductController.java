@@ -3,8 +3,11 @@ package com.grupo3.digitalbook.demo.controller;
 import com.grupo3.digitalbook.demo.entity.Brand;
 import com.grupo3.digitalbook.demo.entity.Product;
 import com.grupo3.digitalbook.demo.entity.ProductImage;
+import com.grupo3.digitalbook.demo.entity.Spec;
 import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
+import com.grupo3.digitalbook.demo.service.IProductService;
+import com.grupo3.digitalbook.demo.service.ISpecService;
 import com.grupo3.digitalbook.demo.service.impl.BrandServiceImpl;
 import com.grupo3.digitalbook.demo.service.impl.ProductImageServiceImpl;
 import com.grupo3.digitalbook.demo.service.impl.ProductServiceImpl;
@@ -32,6 +35,12 @@ public class ProductController {
     private BrandServiceImpl brandService;
     @Autowired
     private ProductImageServiceImpl productImageServiceImpl;
+
+    @Autowired
+    private ISpecService specService;
+
+    @Autowired
+    private IProductService productService;
 
     private final static Logger LOGGER = Logger.getLogger(ProductController.class);
 
@@ -133,6 +142,17 @@ public class ProductController {
         Pageable pageable = PageRequest.of(0, 10);
         List<Product> products = productServiceImpl.getFirst10Products(pageable);
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/productsBySpec/{id}")
+    public ResponseEntity<List<Product>> getProductsBySpecId(@PathVariable Long id) {
+        try {
+            Spec spec = specService.findSpecById(id);
+            List<Product> products = productService.getProductsBySpec(spec);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

@@ -200,3 +200,15 @@
 [2023-11-0719:50:09] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
 [2023-11-0719:50:12] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
 [2023-11-0719:50:12] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-0920:50:02] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-0920:50:02] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-0920:50:02] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-0921:04:10] [ INFO ] [ProductServiceImpl:75] se encontro el producto
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1009:14:56] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1500:05:08] [ ERROR] [ProductServiceImpl:78] no existe este producto
+[2023-11-1500:05:14] [ INFO ] [ProductServiceImpl:75] se encontro el producto

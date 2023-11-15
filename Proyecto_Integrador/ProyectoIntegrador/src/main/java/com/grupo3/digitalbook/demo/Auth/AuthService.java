@@ -43,17 +43,29 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstname(request.getFirstname())
-                .lastname(request.lastname)
+                .lastname(request.getLastname())
                 .role(Role.USER)
                 .build();
 
         userRepository.save(user);
 
-        return AuthResponse.builder()
-                .token(jwtService.getToken(user))
-                .build();
+        String token = jwtService.getToken(user);
+        AuthResponse authResponse = buildAuthResponse(token, user);
 
+
+        return authResponse;
     }
+
+    private AuthResponse buildAuthResponse(String token, UserDetails userDetails) {
+        UserDto userDto = buildUserDto(userDetails);
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setToken(token);
+        authResponse.setUserDto(userDto);
+
+        return authResponse;
+    }
+
 
     private UserDto buildUserDto(UserDetails userDetails) {
         if (userDetails instanceof User) {
