@@ -31,7 +31,7 @@ public class ProductTypeServiceImpl implements IProductTypeService {
 
         if (existingProductType.isPresent()) {
             ProductType productTypeToUpdate = existingProductType.get();
-            productTypeToUpdate.setDescription(productType.getDescription()); // Corregir aquí
+            productTypeToUpdate.setDescription(productType.getDescription());
 
             return productTypeRepository.save(productTypeToUpdate);
         } else {

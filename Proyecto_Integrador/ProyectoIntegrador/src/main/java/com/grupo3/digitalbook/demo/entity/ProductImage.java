@@ -22,7 +22,6 @@ public class ProductImage {
     @Lob
     @Column(name = "image_data")
     private byte[] productImage;
-    /*private String url;*/
 
     @ManyToOne
     @JsonIgnore

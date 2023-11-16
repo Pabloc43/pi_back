@@ -80,20 +80,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productNew) {
         try {
-            // Si vienen cargadas, almacenar caracteristicas en una variable
-            // Si vienen cargadas, almacenar images en una variable
-
-            // Pasar caracteristicas y imagenes de productNew a null
-
-            // Obtener producto de la base utilizando productNew.id
-            // Recorres caracteristicas y imagenes del producto recuperado y le haces un delete a casa una
-
-
-            // a las caracterisdticas e imagenes almecenadas en las variables le seteas el producto obtenido anteriormente
-            // y creas cada una de elllas
-
             Product updatedProduct = productServiceImpl.updateProduct(id, productNew);
-
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

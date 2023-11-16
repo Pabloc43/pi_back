@@ -1,14 +1,15 @@
 package com.grupo3.digitalbook.demo.service.impl;
 
 import com.grupo3.digitalbook.demo.entity.Product;
+import com.grupo3.digitalbook.demo.entity.ProductImage;
 import com.grupo3.digitalbook.demo.entity.Spec;
 import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
+import com.grupo3.digitalbook.demo.repository.IProductImageRepository;
 import com.grupo3.digitalbook.demo.repository.IProductRepository;
 import com.grupo3.digitalbook.demo.service.IProductService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductRepository productRepository;
+
+    @Autowired
+    private IProductImageRepository productImageRepository;
+
 
     @Override
     public Product createProduct(Product product) throws BadRequestException {
@@ -45,9 +50,27 @@ public class ProductServiceImpl implements IProductService {
             product.setName(productNew.getName());
             product.setDescription(productNew.getDescription());
             product.setPrice(productNew.getPrice());
+            product.setStock(productNew.getStock());
             product.setBrand(productNew.getBrand());
             product.setProductType(productNew.getProductType());
-            product.setProductImages(productNew.getProductImages());
+
+            if (productNew.getSpecs() != null && !productNew.getSpecs().isEmpty()) {
+                product.getSpecs().clear();
+                for (Spec spec : productNew.getSpecs()) {
+                    product.getSpecs().add(spec);
+                }
+            }
+
+            if (productNew.getProductImages() != null && !productNew.getProductImages().isEmpty()) {
+                productImageRepository.deleteAll(product.getProductImages());
+
+                product.getProductImages().clear();
+
+                for (ProductImage productImage : productNew.getProductImages()) {
+                    productImage.setProduct(product);
+                    product.getProductImages().add(productImage);
+                }
+            }
 
             LOGGER.info("Se actualizó el producto");
             return productRepository.save(product);
@@ -56,6 +79,11 @@ public class ProductServiceImpl implements IProductService {
             throw new ResourceNotFoundException("No existe este producto");
         }
     }
+
+
+
+
+
 
     @Override
     public void deleteProduct(Long id) throws ResourceNotFoundException {
