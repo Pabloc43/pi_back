@@ -262,3 +262,36 @@
 [2023-11-1521:32:18] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
 [2023-11-1521:32:18] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
 [2023-11-1521:34:25] [ INFO ] [ProductServiceImpl:75] Se actualizó el producto
+[2023-11-1709:26:49] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1709:26:49] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1709:26:49] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1710:02:45] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1710:02:45] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1711:02:10] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1711:02:10] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1711:02:10] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1713:48:03] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1713:48:03] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1713:48:03] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1714:59:32] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1714:59:32] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:11:58] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:11:58] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:41:38] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1716:41:38] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:41:38] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:55:48] [ WARN ] [GlobalExceptionHandler:23] Recurso no encontrado: No se encontraron reservas para el usuario con el ID: 1
+[2023-11-1716:56:46] [ INFO ] [ProductServiceImpl:103] se encontro el producto
+[2023-11-1716:57:35] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:57:35] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1716:57:42] [ INFO ] [ProductServiceImpl:103] se encontro el producto
+[2023-11-1717:17:30] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1717:17:30] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1717:17:30] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1717:22:13] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1717:22:13] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1719:14:38] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1719:14:38] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1719:15:13] [ INFO ] [ProductServiceImpl:75] Se actualizó el producto
+[2023-11-1719:24:42] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1719:24:42] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
