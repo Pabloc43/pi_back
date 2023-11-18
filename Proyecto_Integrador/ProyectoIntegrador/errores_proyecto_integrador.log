@@ -295,3 +295,10 @@
 [2023-11-1719:15:13] [ INFO ] [ProductServiceImpl:75] Se actualizó el producto
 [2023-11-1719:24:42] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
 [2023-11-1719:24:42] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1720:33:17] [ INFO ] [ProductServiceImpl:103] se encontro el producto
+[2023-11-1720:38:17] [ INFO ] [ProductServiceImpl:103] se encontro el producto
+[2023-11-1723:56:06] [ INFO ] [BrandServiceImpl:25] Se guardará la marca de producto
+[2023-11-1723:56:06] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1723:56:06] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1723:58:07] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen
+[2023-11-1723:58:07] [ INFO ] [ProductImageServiceImpl:26] Se guardará la imagen

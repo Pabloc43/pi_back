@@ -24,7 +24,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @JsonIgnoreProperties(value = {"reservations", "stock"})
+    @JsonIgnoreProperties(value = {"reservations"})
     private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)

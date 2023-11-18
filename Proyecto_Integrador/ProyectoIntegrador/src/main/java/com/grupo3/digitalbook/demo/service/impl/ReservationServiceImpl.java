@@ -35,6 +35,13 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public Reservation createReservation(Reservation reservation) throws ResourceNotFoundException, BadRequestException, InsufficientStockException {
+        Product product = productRepository.findById(reservation.getProduct().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el producto con el ID: " + reservation.getProduct().getId()));
+
+        if (product.getStock() < 1) {
+            throw new InsufficientStockException("No hay suficiente stock del producto para realizar la reserva");
+        }
+
         if (!isProductAvailable(reservation.getProduct(), reservation.getStartDate(), reservation.getEndDate())) {
             throw new BadRequestException("El producto ya está reservado durante el período de la nueva reserva");
         }
