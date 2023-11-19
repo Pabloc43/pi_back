@@ -25,11 +25,16 @@ public class Spec {
     @NotBlank
     private String description;
 
+    @NotNull
+    @NotBlank
+    private String icon;
+
     @ManyToMany(mappedBy = "specs")
     @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
-    public Spec(String description) {
+    public Spec(String description, String icon) {
         this.description = description;
+        this.icon = icon;
     }
 }
