@@ -20,7 +20,7 @@ public class ReservationController {
     @Autowired
     private IReservationService reservationService;
 
-    @PostMapping ("/create")
+    @PostMapping("/create")
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
         try {
             Reservation createdReservation = reservationService.createReservation(reservation);

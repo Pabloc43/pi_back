@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class UserNotFoundException extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ RuntimeException.class })
+    @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<Object> handleNotFoundException(RuntimeException ex, WebRequest request) {
         if (ex.getMessage().equals("Usuario no encontrado")) {
             // Si la excepción es "Usuario no encontrado", responde con un estado 404

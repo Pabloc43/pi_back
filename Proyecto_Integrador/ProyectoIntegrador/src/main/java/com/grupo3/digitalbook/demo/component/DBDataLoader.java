@@ -53,7 +53,7 @@ public class DBDataLoader {
 
         if (specRepository.count() == 0) {
             specRepository.saveAll(List.of(
-                    new Spec("Acceso fácil a los controles", "gamepad" ),
+                    new Spec("Acceso fácil a los controles", "gamepad"),
                     new Spec("Alcance: 12 metros", "height"),
                     new Spec("Altura de elevación máxima: 9296 mm", "height"),
                     new Spec("Altura de trabajo: 15,72 metros", "height"),
