@@ -31,3 +31,7 @@ jobs:
       run: mvn -B package --file Proyecto_Integrador/pom/pom.xml
     - name: List files
       run: ls -R
+    - name: Deploy to EC2
+      run: |
+        ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /ruta/del/proyecto && git pull && mvn -B package --file Proyecto_Integrador/pom/pom.xml && reiniciar_aplicacion"
+
