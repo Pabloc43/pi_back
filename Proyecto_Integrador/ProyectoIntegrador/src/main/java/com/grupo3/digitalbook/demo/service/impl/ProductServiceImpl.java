@@ -1,10 +1,12 @@
 package com.grupo3.digitalbook.demo.service.impl;
 
+import com.grupo3.digitalbook.demo.entity.Brand;
 import com.grupo3.digitalbook.demo.entity.Product;
 import com.grupo3.digitalbook.demo.entity.ProductImage;
 import com.grupo3.digitalbook.demo.entity.Spec;
 import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
+import com.grupo3.digitalbook.demo.repository.IBrandRepository;
 import com.grupo3.digitalbook.demo.repository.IProductImageRepository;
 import com.grupo3.digitalbook.demo.repository.IProductRepository;
 import com.grupo3.digitalbook.demo.service.IProductService;
@@ -28,6 +30,9 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private IProductImageRepository productImageRepository;
 
+    @Autowired
+    private IBrandRepository brandRepository;
+
 
     @Override
     public Product createProduct(Product product) throws BadRequestException {
@@ -47,12 +52,40 @@ public class ProductServiceImpl implements IProductService {
 
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
-            product.setName(productNew.getName());
-            product.setDescription(productNew.getDescription());
-            product.setPrice(productNew.getPrice());
-            product.setStock(productNew.getStock());
-            product.setBrand(productNew.getBrand());
-            product.setProductType(productNew.getProductType());
+
+            if (productNew.getName() != null) {
+                product.setName(productNew.getName());
+            }
+            if (productNew.getDescription() != null) {
+                product.setDescription(productNew.getDescription());
+            }
+            if (productNew.getPrice() != null) {
+                product.setPrice(productNew.getPrice());
+            }
+            if (productNew.getStock() != null) {
+                product.setStock(productNew.getStock());
+            }
+
+            // Actualizar la marca solo si se proporciona en productNew
+            if (productNew.getBrand() != null) {
+                Brand newBrand = productNew.getBrand();
+
+                // Verificar si la nueva marca ya existe en la base de datos
+                Optional<Brand> existingBrand = Optional.ofNullable(brandRepository.findByDescription(newBrand.getDescription()));
+
+                if (existingBrand.isPresent()) {
+                    // La marca ya existe, simplemente asignarla al producto
+                    product.setBrand(existingBrand.get());
+                } else {
+                    // La marca no existe, guardarla primero y luego asignarla al producto
+                    brandRepository.save(newBrand);
+                    product.setBrand(newBrand);
+                }
+            }
+
+            if (productNew.getProductType() != null) {
+                product.setProductType(productNew.getProductType());
+            }
 
             if (productNew.getSpecs() != null && !productNew.getSpecs().isEmpty()) {
                 product.getSpecs().clear();
