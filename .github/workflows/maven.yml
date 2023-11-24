@@ -1,88 +1,50 @@
-name: Java CI with Maven and EC2 Deployment
+name: Deploy Backend with Spring Boot to AWS EC2
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths:
+      - Proyecto_Integrador/ProyectoIntegrador/*/
+    branches: [main]
 
 jobs:
-  build-and-deploy:
-
-    runs-on: ubuntu-latest
-
+  avoid_reduncy:
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Cancel Previous Redundant Builds
+        uses: styfle/cancel-workflow-action@0.12.0
+        with:
+          access_token: ${{ github.token }}
 
-    - name: Set up JDK 18
-      uses: actions/setup-java@v3
-      with:
-        java-version: '18'
-        distribution: 'temurin'
-        cache: maven
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v3.13.0
+        with:
+          distribution: "temurin"
+          java-version: "11"
+          cache: maven
+          settings-path: "Proyecto_Integrador/ProyectoIntegrador/*"
+      - name: Build Project
+        run: cd Proyecto_Integrador/ProyectoIntegrador && mvn clean install -DskipTests
+      - name: Login to docker hub
+        run: docker login -u Pabloc43 -p 123456789
+      - name: Build docker image
+        run: docker build -t pabloc43/proyecto_integrador:latest Proyecto_Integrador/ProyectoIntegrador/.
+      - name: Publish image to docker hub
+        run: docker push pabloc43/proyecto_integrador:latest
 
-    - name: Build with Maven
-      run: mvn -B package --file Proyecto_Integrador/pom/pom.xml
-
-    - name: Transfer Files to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ec2-54-87-92-78.compute-1.amazonaws.com
-        username: ec2-user
-        key: MIIEowIBAAKCAQEAiBbVXt2ygzbVs+1LtgvFn/UjQZrBEpCw6Rngy4NYKen5StUK
-fQqva7pLYs/kVKWB/ZOvZGfNMjVpPkfBaTiE1zxQEkL1r/62EWlSSKYhjdbs8eB5
-YpI8Si4SEtWH6JENrdGBS6nJuZt078TfM8JyRd5iaKlVwnb4SRDL3+4LEJWcE199
-TCH2kG0+swP/OYF8nvOTEwrmXDZ3yVf+tBMzzwXMqLDY1b/wzS5wD1q8jMCsyFiY
-RPPs37MZG/dZZtcUoyJIRQjP4YHu90ucJSvyu8FeqKybsLXjTzq8QqtwD1f+tM6r
-3sLPCfIUvbPk7PqaSS/4NJEXn4zZKyxstctYVQIDAQABAoIBAEMT9iHnZqj0a0tf
-iHT3wnZAjxs0Gzx6YyjSX5IQcHFgaUcwURYnISYZUjUnQWVTmwoRNF9qJqM73l8b
-YULq39dzXAhURuNzyew1HKDAekN+j5X9Tfd/GwZ5ROFRrMa+UJ6/aFqSGuNIs8/H
-GzlY+5hir+DkrmfG2kSxabw7ieqnBaCpwC1DPO3gwnFiLRTs/FHhnkBvXxNgFZFx
-4UindtlVGSrwodiowHfXRmGYT+D0eM7LCpr6c4WvttgNehA8Tmbp3c2vTadZA1W9
-qboVNXF4IhWOVX4KR40nDs4NdSyoJqGKxBg+gVaeENLCtqio358EQKwN+CXfuJXx
-xZiarBUCgYEA8M5hKoDNZMd/2cR+YNCGqRQ/EAfCRukZo0wQzHgpKj9znFWE0lwC
-RDK4XDYCWGKV+P4xeBUcyg/NTSZ1s38ZlWvz08DlnXLS0sTwuIROn8f7xauOR7wQ
-uMYv3yPQM5Lrgr7/1IgROcIsBcY9mp3Bnd9+RbVfFD7X8JYxyzYXYF8CgYEAkK0D
-c78C/QhOQi388PSmFTF4dqIXOv6vjZ7D8/6+UbwsU0YOyKylaDC+iqcy1MSzZNbP
-aLtXz0IWJo8bAMh1HPvigSr/Js8oPuTlgD5TeyRrK1+G/hXymquK+p/RM5PU3pi/
-/BgzW4/ZFTJxfAMJJhE8mbqajLwC3NsMdzVRM8sCgYAUeTeBqZnM67lPBonIKXKJ
-hZMnBcHazY7Ed38mI0E8ulBWBl9Yk0IOElHiZSUl5pvho5sJHqJn+5f060QukqvW
-LGt6oXfkPxL1oJDm3zjgFNyvHbrnFnJFg3QmgKD/AYrMfvi5VShBxOSBSS2Lq8X+
-ajYOLzF6Qy2Q4vQw1tR9+QKBgGyZEmBN30Zkd6oBrz6HxiteaRhT77AfAVQC+wAq
-Fl5wK62OhwZnYfnlrQGTI/rGdAqbnDD3f6BZ8RqcjR53WkGZaZqf1csh8QnU89jh
-7/QdkDyMhl4vx14GqloaoQRgUYeNjX8EA3kVb1QT+0+lT7a9dYnHor9FWbjCzIan
-BP8lAoGBAIbbkZQcVvQILzKrahCxdO5iILTnqPhdK+IodpOYJ61jxYc648TED/bI
-arnuprE1mTW5YyXjiUYUbuplKiHGA1hBnSntBRLLxScSnVyBaptBLqVHw9JZIIA2
-igcvNkq5YWTTAKP5Z1/MUVjxYj5JngN1wm2hciIrZMw5gXLw22Ac
-        source: "Proyecto_Integrador/target/your-application.jar"  # Actualiza con el nombre correcto del JAR
-        target: "/ruta/en/la/instancia/tu_aplicacion"  # Ruta en la instancia donde deseas colocar el JAR
-
-    - name: SSH into EC2 and Restart Application
-      run: |
-        ssh -i MIIEowIBAAKCAQEAiBbVXt2ygzbVs+1LtgvFn/UjQZrBEpCw6Rngy4NYKen5StUK
-fQqva7pLYs/kVKWB/ZOvZGfNMjVpPkfBaTiE1zxQEkL1r/62EWlSSKYhjdbs8eB5
-YpI8Si4SEtWH6JENrdGBS6nJuZt078TfM8JyRd5iaKlVwnb4SRDL3+4LEJWcE199
-TCH2kG0+swP/OYF8nvOTEwrmXDZ3yVf+tBMzzwXMqLDY1b/wzS5wD1q8jMCsyFiY
-RPPs37MZG/dZZtcUoyJIRQjP4YHu90ucJSvyu8FeqKybsLXjTzq8QqtwD1f+tM6r
-3sLPCfIUvbPk7PqaSS/4NJEXn4zZKyxstctYVQIDAQABAoIBAEMT9iHnZqj0a0tf
-iHT3wnZAjxs0Gzx6YyjSX5IQcHFgaUcwURYnISYZUjUnQWVTmwoRNF9qJqM73l8b
-YULq39dzXAhURuNzyew1HKDAekN+j5X9Tfd/GwZ5ROFRrMa+UJ6/aFqSGuNIs8/H
-GzlY+5hir+DkrmfG2kSxabw7ieqnBaCpwC1DPO3gwnFiLRTs/FHhnkBvXxNgFZFx
-4UindtlVGSrwodiowHfXRmGYT+D0eM7LCpr6c4WvttgNehA8Tmbp3c2vTadZA1W9
-qboVNXF4IhWOVX4KR40nDs4NdSyoJqGKxBg+gVaeENLCtqio358EQKwN+CXfuJXx
-xZiarBUCgYEA8M5hKoDNZMd/2cR+YNCGqRQ/EAfCRukZo0wQzHgpKj9znFWE0lwC
-RDK4XDYCWGKV+P4xeBUcyg/NTSZ1s38ZlWvz08DlnXLS0sTwuIROn8f7xauOR7wQ
-uMYv3yPQM5Lrgr7/1IgROcIsBcY9mp3Bnd9+RbVfFD7X8JYxyzYXYF8CgYEAkK0D
-c78C/QhOQi388PSmFTF4dqIXOv6vjZ7D8/6+UbwsU0YOyKylaDC+iqcy1MSzZNbP
-aLtXz0IWJo8bAMh1HPvigSr/Js8oPuTlgD5TeyRrK1+G/hXymquK+p/RM5PU3pi/
-/BgzW4/ZFTJxfAMJJhE8mbqajLwC3NsMdzVRM8sCgYAUeTeBqZnM67lPBonIKXKJ
-hZMnBcHazY7Ed38mI0E8ulBWBl9Yk0IOElHiZSUl5pvho5sJHqJn+5f060QukqvW
-LGt6oXfkPxL1oJDm3zjgFNyvHbrnFnJFg3QmgKD/AYrMfvi5VShBxOSBSS2Lq8X+
-ajYOLzF6Qy2Q4vQw1tR9+QKBgGyZEmBN30Zkd6oBrz6HxiteaRhT77AfAVQC+wAq
-Fl5wK62OhwZnYfnlrQGTI/rGdAqbnDD3f6BZ8RqcjR53WkGZaZqf1csh8QnU89jh
-7/QdkDyMhl4vx14GqloaoQRgUYeNjX8EA3kVb1QT+0+lT7a9dYnHor9FWbjCzIan
-BP8lAoGBAIbbkZQcVvQILzKrahCxdO5iILTnqPhdK+IodpOYJ61jxYc648TED/bI
-arnuprE1mTW5YyXjiUYUbuplKiHGA1hBnSntBRLLxScSnVyBaptBLqVHw9JZIIA2
-igcvNkq5YWTTAKP5Z1/MUVjxYj5JngN1wm2hciIrZMw5gXLw22Ac ec2-user@ec2-54-87-92-78.compute-1.amazonaws.com "cd /ruta/en/la/instancia/tu_aplicacion && nohup java -jar your-application.jar > output.log 2>&1 &"  # Actualiza con el nombre correcto del JAR
-
+  deploy:
+    needs: build
+    runs-on: aws-ec2
+    steps:
+      - name: Login to docker hub
+        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Pull Image from docker hub
+        run: sudo docker pull aguekdjian/backend-java:latest
+      - name: Delete old container
+        run: sudo docker rm -f backend-java-container
+      - name: Run docker container
+        run: sudo docker run -d -p 8080:8080 --name backend-java-container -e DB_URL=${{secrets.DB_URL}} -e DB_USERNAME=${{secrets.DB_USERNAME}} -e DB_PASSWORD=${{secrets.DB_PASSWORD}} -e JWT_SECRET=${{secrets.JWT_SECRET}} -e DB_UPDATE=${{secrets.DB_UPDATE}} aguekdjian/backend-java:latest
