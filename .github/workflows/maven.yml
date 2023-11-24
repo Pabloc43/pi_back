@@ -39,10 +39,10 @@ jobs:
     runs-on: aws-ec2
     steps:
       - name: Login to docker hub
-        run: sudo docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+        run: sudo docker login -u pabloc43 -p 123456789
       - name: Pull Image from docker hub
-        run: sudo docker pull aguekdjian/backend-java:latest
+        run: sudo docker pull pabloc43/proyecto_integrador:latest
       - name: Delete old container
-        run: sudo docker rm -f backend-java-container
+        run: sudo docker rm -f proyecto_integrador
       - name: Run docker container
-        run: sudo docker run -d -p 8080:8080 --name backend-java-container -e DB_URL=${{secrets.DB_URL}} -e DB_USERNAME=${{secrets.DB_USERNAME}} -e DB_PASSWORD=${{secrets.DB_PASSWORD}} -e JWT_SECRET=${{secrets.JWT_SECRET}} -e DB_UPDATE=${{secrets.DB_UPDATE}} aguekdjian/backend-java:latest
+        run: sudo docker run -d -p 8081:8081 --name proyecto_integrador -e DB_URL=db.ctd.academy:3306 -e DB_USERNAME=1023c01_GRUPO3 -e DB_PASSWORD=Go8ahNgu  pabloc43/proyecto_integrador:latest
