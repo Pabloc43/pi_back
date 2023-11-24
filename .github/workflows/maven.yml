@@ -2,8 +2,6 @@ name: Deploy Backend with Spring Boot to AWS EC2
 
 on:
   push:
-    paths:
-      - Proyecto_Integrador/ProyectoIntegrador/*/
     branches: [main]
 
 jobs:
