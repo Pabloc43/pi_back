@@ -43,7 +43,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "productType_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("products")
+    @JsonIgnoreProperties(value = {"products", "productTypeImage"})
     private ProductType productType;
 
     @ManyToOne

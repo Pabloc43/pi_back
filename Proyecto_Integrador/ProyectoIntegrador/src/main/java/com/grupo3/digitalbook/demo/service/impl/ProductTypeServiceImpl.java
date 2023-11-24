@@ -1,6 +1,7 @@
 package com.grupo3.digitalbook.demo.service.impl;
 
 import com.grupo3.digitalbook.demo.entity.ProductType;
+import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
 import com.grupo3.digitalbook.demo.repository.IProductTypeRepository;
 import com.grupo3.digitalbook.demo.service.IProductTypeService;
@@ -20,18 +21,40 @@ public class ProductTypeServiceImpl implements IProductTypeService {
     private IProductTypeRepository productTypeRepository;
 
     @Override
-    public ProductType createProductType(ProductType productType) {
-        logger.info("Se guardará el tipo de producto");
+    public ProductType createProductType(ProductType productType) throws BadRequestException {
+        String description = productType.getDescription();
+        if (productTypeRepository.findByDescription(description).isPresent()) {
+            throw new BadRequestException("Ya existe un ProductType con el nombre: " + description);
+        }
         return productTypeRepository.save(productType);
     }
 
     @Override
-    public ProductType updateProductType(Long id, ProductType productType) throws ResourceNotFoundException {
+    public ProductType updateProductType(Long id, ProductType productType) throws ResourceNotFoundException, BadRequestException {
         Optional<ProductType> existingProductType = productTypeRepository.findById(id);
 
         if (existingProductType.isPresent()) {
             ProductType productTypeToUpdate = existingProductType.get();
-            productTypeToUpdate.setDescription(productType.getDescription());
+
+            String newDescription = productType.getDescription();
+            if (newDescription != null && !newDescription.equals(productTypeToUpdate.getDescription())
+                    && productTypeRepository.findByDescription(newDescription).isPresent()) {
+                throw new BadRequestException("Ya existe un ProductType con el nombre: " + newDescription);
+            }
+
+            if (newDescription != null) {
+                productTypeToUpdate.setDescription(newDescription);
+            }
+
+            String newExtraDescription = productType.getExtraDescription();
+            if (newExtraDescription != null) {
+                productTypeToUpdate.setExtraDescription(newExtraDescription);
+            }
+
+            byte[] newProductTypeImage = productType.getProductTypeImage();
+            if (newProductTypeImage != null) {
+                productTypeToUpdate.setProductTypeImage(newProductTypeImage);
+            }
 
             return productTypeRepository.save(productTypeToUpdate);
         } else {

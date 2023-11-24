@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @Component
@@ -27,10 +31,10 @@ public class DBDataLoader {
     public void init() {
         if (productTypeRepository.count() == 0) {
             productTypeRepository.saveAll(List.of(
-                    new ProductType("Agrícola/Forestal"),
-                    new ProductType("Construcción"),
-                    new ProductType("Carga útil"),
-                    new ProductType("Infraestructura")
+                    new ProductType("Agrícola/Forestal", "Equipos especializados para satisfacer todas tus necesidades en el campo agrícola y forestal.", getImageAsBytes("src/main/resources/images/agro.jpg")),
+                    new ProductType("Construcción", "Amplia gama de equipos especializados para satisfacer todas tus necesidades en el sector de la construcción.", getImageAsBytes("src/main/resources/images/construccion.jpg")),
+                    new ProductType("Carga útil", "Variedad de equipos diseñados para movilizar materiales y mercancías de manera eficiente en tus proyectos.", getImageAsBytes("src/main/resources/images/carga.jpg")),
+                    new ProductType("Infraestructura", "Herramientas esenciales para la construcción y mantenimiento de infraestructuras.", getImageAsBytes("src/main/resources/images/civil.jpg"))
             ));
         }
 
@@ -102,4 +106,16 @@ public class DBDataLoader {
             ));
         }
     }
+
+
+    private byte[] getImageAsBytes(String imagePath) {
+        try {
+            Path path = Paths.get(imagePath);
+            return Files.readAllBytes(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+

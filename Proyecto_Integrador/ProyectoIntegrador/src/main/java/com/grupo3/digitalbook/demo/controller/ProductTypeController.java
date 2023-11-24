@@ -1,6 +1,7 @@
 package com.grupo3.digitalbook.demo.controller;
 
 import com.grupo3.digitalbook.demo.entity.ProductType;
+import com.grupo3.digitalbook.demo.exception.BadRequestException;
 import com.grupo3.digitalbook.demo.exception.ResourceNotFoundException;
 import com.grupo3.digitalbook.demo.service.IProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ProductTypeController {
     private IProductTypeService productTypeService;
 
     @PostMapping("/create")
-    public ResponseEntity<ProductType> createProductType(@RequestBody ProductType productType) {
+    public ResponseEntity<ProductType> createProductType(@RequestBody ProductType productType) throws BadRequestException {
         ProductType createdProductType = productTypeService.createProductType(productType);
         return new ResponseEntity<>(createdProductType, HttpStatus.CREATED);
     }
@@ -31,6 +32,8 @@ public class ProductTypeController {
         } catch (ResourceNotFoundException e) {
             e.getMessage();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (BadRequestException e) {
+            throw new RuntimeException(e);
         }
     }
 
