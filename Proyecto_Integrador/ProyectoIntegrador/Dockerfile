@@ -1,4 +1,4 @@
-FROM openjdk:11-alpine
+FROM openjdk:11
 RUN apk update && apk add maven
 WORKDIR /app
 COPY . .
