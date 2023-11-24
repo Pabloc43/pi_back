@@ -28,7 +28,7 @@ jobs:
       - name: Build Project
         run: cd Proyecto_Integrador/ProyectoIntegrador && mvn clean install -DskipTests
       - name: Login to docker hub
-        run: docker login -u Pabloc43 -p 123456789
+        run: docker login -u pabloc43 -p 123456789
       - name: Build docker image
         run: docker build -t pabloc43/proyecto_integrador:latest Proyecto_Integrador/ProyectoIntegrador/.
       - name: Publish image to docker hub
