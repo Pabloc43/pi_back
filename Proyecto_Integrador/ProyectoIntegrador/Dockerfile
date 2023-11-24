@@ -1,5 +1,4 @@
 FROM openjdk:11
-RUN apk update && apk add maven
 WORKDIR /app
 COPY . .
 RUN mvn package
