@@ -45,4 +45,4 @@ jobs:
       - name: Delete old container
         run: sudo docker rm -f proyecto_integrador
       - name: Run docker container
-        run: sudo docker run -d -p 8081:8081 --name proyecto_integrador -e DB_URL='jdbc:db.ctd.academy:3306/maquinariapro' -e DB_USERNAME='1023c01_GRUPO3' -e DB_PASSWORD=Go8ahNgu  pabloc43/proyecto_integrador:latest
+        run: sudo docker run -d -p 8081:8081 --name proyecto_integrador -e DB_URL='jdbc:db.ctd.academy:3306/maquinariapro?createDatabaseIfNotExist=true' -e DB_USERNAME='1023c01_GRUPO3' -e DB_PASSWORD=Go8ahNgu  pabloc43/proyecto_integrador:latest
